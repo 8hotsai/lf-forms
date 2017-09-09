@@ -1,6 +1,6 @@
 $(document).ready(function () {
    var org_chart = $.parseJSON('[{"id":"10000","name":"Company Limited","head":"Name","parent_id":"0"},{...}]');
-  
+ 
    load_json_data('BU');
 
    function load_json_data(id, parent_id) {
@@ -34,13 +34,13 @@ $(document).ready(function () {
        var bu_id = $('#Field57').val();
        if (bu_id != '') {
            load_json_data('Division', bu_id);
-           // reset Division Head, Department, Hiring Manager
+           // clear Division Head, Department, Hiring Manager
            $('#q25 input').val('');
            $('#Field58').html('<option value="">Select Department</option>');
            $('#q13 input').val('');
        }
        else {
-           // reset Division, Division Head, Department, Hiring Manager
+           // clear Division, Division Head, Department, Hiring Manager
            $('#Field40').html('<option value="">Select Division</option>');
            $('#q25 input').val('');
            $('#Field58').html('<option value="">Select Department</option>');
@@ -54,13 +54,13 @@ $(document).ready(function () {
        var division_id = $('#Field40').val();
        if (division_id != '') {
            var dhead = load_json_data('Department', division_id);
-           // reset Division Head, Department, Hiring Manager
+           // set Division Head and clear Hiring Manager
            $('#q59 input').val(dhead);
            $('#q13 input').val('');
        }
        else {
-           // reset Division, Division Head, Department, Hiring Manager
-           $('#Field40').html('<option value="">Select Division</option>');
+           // clear Division Head, Department, Hiring Manager
+           // $('#Field40').html('<option value="">Select Division</option>');
            $('#q59 input').val('');
            $('#Field58').html('<option value="">Select Department</option>');
            $('#q13 input').val('');
@@ -71,13 +71,19 @@ $(document).ready(function () {
    $('#q40').change(function () {
        //var id_mapping = {"BU":"57", "Division":"40", "Division Head":"59", "Department":"58","Hiring Manager":"13"};
        var department_id = $('#Field58').val();
-       if (division_id != '') {
-           var dhead = load_json_data('Department', division_id);
-           // reset Division Head, Department, Hiring Manager
+       if (department_id != '') {
+           var dhead = '';
+           $.each(org_chart, function (key, value) {
+               if (value.id === department_id) {
+                   dhead = value.head;
+               }
+           });
+
+           // show Hiring Manager
            $('#q13 input').val(dhead);
        }
        else {
-           // reset Division, Division Head, Department, Hiring Manager
+           // clear Hiring Manager
            $('#q13 input').val('');
        }
    });

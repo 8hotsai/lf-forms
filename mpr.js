@@ -68,7 +68,7 @@ $(document).ready(function () {
    });
 
    // Department on change
-   $('#q40').change(function () {
+   $('#q58').change(function () {
        //var id_mapping = {"BU":"57", "Division":"40", "Division Head":"59", "Department":"58","Hiring Manager":"13"};
        var department_id = $('#Field58').val();
        if (department_id != '') {
